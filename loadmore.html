@@ -70,7 +70,7 @@
       index += len;  // index 每次增加值为 len
       
       xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
+      xhr.open('GET', '/task12-demo/server.js', true);
       xhr.send();
       xhr.onreadystatechange = function(){
         if (xhr.readyState === 4) {
