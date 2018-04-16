@@ -78,7 +78,7 @@
             var string = JSON.parse(xhr.responseText);
             console.log(string);
             isRequesting = false;
-            for (let i = 0; i < string.length; i++) {  // 将获取到的数据插入到页面中
+            for (var i = 0; i < string.length; i++) {  // 将获取到的数据插入到页面中
               var child = document.createElement('li');
               child.innerText = string[i];
               ul.appendChild(child);
