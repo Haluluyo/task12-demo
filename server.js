@@ -24,7 +24,7 @@ function staticRoot(staticPath, req, res){
     data.push("内容" + (parseInt(index) + i));
   }
   
-  if(pathName === '/loadmore'){
+  if(pathName === '/server.js'){
     res.end(JSON.stringify(data));
   }
     
