@@ -20,11 +20,11 @@ function staticRoot(staticPath, req, res){
   var index = pathObj.query.index;
   var len = pathObj.query.len;
   var data = [];
-  for(let i = 0; i < len; i++){
+  for(var i = 0; i < len; i++){
     data.push("内容" + (parseInt(index) + i));
   }
   
-  if(pathName === '/loadmore.html'){
+  if(pathName === '/loadmore'){
     res.end(JSON.stringify(data));
   }
     
