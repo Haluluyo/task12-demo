@@ -42,41 +42,50 @@
       <li>内容2</li>
     </ul>
     <button id="myBtn">加载更多</button>
-    
-   <script>
-            var btn = document.querySelector("#myBtn")
-            var ct = document.querySelector("#ct")
-            var pageIndex = 0
-            var isDataArrive = true
-            btn.addElementListener("click", function(e){
-                e.preventDefault()
-                if(!isDataArrive){
-                    return;
-                }
-                var xhr = new XMLHttpRequest()
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState === 4){
-                        if(xhr.staus === 200 || xhr.staus === 304){
-                            var result = JSON.parse(xhr.responseText)
-                            var fragment = document.createDocumentFragment()
-                            for(var i = 0; i < result.length; i++){
-                                var node = document.createElement("li")
-                                node.innerText = result[i]
-                                fragment.appendChild(node)
-                            }
-                            ct.appendChild(fragment)
-                            pageIndex += 5
-                        }else{
-                            alert("出错了")
-                        }
-                        isDataArrive = true
-                    }
-                }
-                xhr.open("get","/loadMore?index="+pageIndex+"&length=5",true)
-                xhr.send()
-                isDataArrive = false
-            })
-        </script>
-
+    <script>
+      var ul = document.querySelector('#ct');
+      var button = document.querySelector('#myBtn');
+      ul.addEventListener('mouseover', function(e){
+        var target = e.target;
+        if (target.tagName.toLowerCase() === 'li'){
+          target.classList.add('hover');
+        }
+      })
+      ul.addEventListener('mouseout', function(e){
+        var target = e.target;
+        if (target.tagName.toLowerCase() === 'li'){
+          target.classList.remove('hover');
+        }
+      })
+      var index = 3;
+      var len = 5;
+      var isRequesting = false;
+      button.addEventListener('click', function(){
+        if(isRequesting) {
+          return;
+        } 
+        isRequesting = true;
+        var url = '/loadmore?'+"index=" + index + "&" + "len="+ len;  // 拼接 url
+        index += len;  // index 每次增加值为 len
+      
+        xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState === 4) {
+            if ((xhr.status >= 200 && xhr.status <= 300) || (xhr.status === 304)) {
+              var string = JSON.parse(xhr.responseText);
+              console.log(string);
+              isRequesting = false;
+              for (let i = 0; i < string.length; i++) {  // 将获取到的数据插入到页面中
+                var child = document.createElement('li');
+                child.innerText = string[i];
+                ul.appendChild(child);
+              }
+            }
+          }
+        }
+      })
+    </script> 
   <body>
 </html>
