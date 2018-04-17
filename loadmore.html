@@ -57,12 +57,12 @@
           target.classList.remove('hover');
         }
       })
-      var index = 3;
-      var len = 5;
-      var isRequesting = false;
+      var index = 3;//设置要加载的数据初始序号
+      var len = 5;// 每次加载数据个数
+      var isRequesting = false;//加上状态锁防止用户重复点击
       button.addEventListener('click', function(){
         if(isRequesting) {
-          return;
+          return;//如果正在请求数据，点击无效
         } 
         isRequesting = true;
         var url = '/loadmore?'+"index=" + index + "&" + "len="+ len;  // 拼接 url
@@ -78,8 +78,8 @@
               console.log(string);
               isRequesting = false;
               for (let i = 0; i < string.length; i++) {  // 将获取到的数据插入到页面中
-                var child = document.createElement('li');
-                child.innerText = string[i];
+                var child = document.createElement('li');//添加5个li
+                child.innerText = string[i];//第一次点击后5个li的文本内容即"内容3","内容4","内容5","内容6","内容7"
                 ul.appendChild(child);
               }
             }
